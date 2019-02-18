@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>This is the Home Page</title>
+	<script type="text/javascript">
+		function Check(){
+			var am = localStorage.getItem("username");
+			var accepted = new XMLHttpRequest();
+			accepted.open("GET","http://localhost:8080/ds2019/api/accepted/"+am, true);
+			accepted.send();
+
+			accepted.onload = function(){
+			var data = JSON.parse(this.response);
+			if(data != null){
+				document.getElementById("res").innerHTML = "You have been accepted with score: "+data['score']; 
+			}else{
+				document.getElementById("res").innerHTML = "You have not been accepted"; 
+			}
+			}
+		}
+
+		function Edit(){
+			window.location.assign("edit.html");
+		}
+
+		function Add(){
+			window.location.assign("add.html");
+		}
+
+
+	</script>
+</head>
+<body>
+	<input type="button" value="Edit" onclick="Edit()">
+	<input type="button" value="Check" onclick="Check()">
+	<input type="button" value="Add" onclick="Add()">
+	<div id="res"></div>
+</body>
+</html>

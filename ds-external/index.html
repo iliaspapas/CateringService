@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Welcome to the Catering Service</title>
+	<script type="text/javascript">
+
+		function Login(){
+			if(ValidateUsername()){
+				var response;
+				var username= document.getElementById("username").value;
+				var password= document.getElementById("password").value;
+
+				var xmlhttp = new XMLHttpRequest();
+				
+				
+
+				xmlhttp.open("GET","http://localhost:8080/ds2019/api/student/"+username, true);
+				xmlhttp.send();
+
+				xmlhttp.onload = function(){
+					 var data = JSON.parse(this.response);
+					 var pass = data["password"];
+					 if(data != null){
+					 	if(pass == password){
+					 		localStorage.setItem("username",username);
+					 		window.location.assign("home.html");
+					 	}else{
+					 			document.getElementById("res").innerHTML = "wrong password"; 
+					 	}
+					 }else{
+					 	document.getElementById("res").innerHTML = "wrong username"; 
+					 }
+				}
+
+			}
+
+		}
+
+		function ValidateUsername(){
+			var username = document.forms['login']['username'];
+			
+			if(isNaN(username.value)){
+				alert("username is your Am and should be a number!");
+                                return false;
+                        }else{
+                                return true;
+            			}
+
+		}
+		
+
+
+
+	</script>
+</head>
+<body>
+	<header><h1>Login<h1></header>
+		<form id="login" name="login">
+			<div id="username_div">Username: <input type="text" id="username" name="username" placeholder="ex.214154" >
+			</div>
+			<div id="password_div">Password: <input type="password" id="password" name="password" placeholder="password" >
+			</div>
+			<input type="button" value="Login" onclick="Login()">
+		</form>
+		<div id="res"></div>
+
+</body>
+</html>

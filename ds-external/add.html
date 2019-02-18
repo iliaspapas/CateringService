@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Add a new Form</title>
+	<script type="text/javascript">
+		function fill(){
+			var am = localStorage.getItem("username");
+			document.getElementById("username").value=am;
+		}
+
+		function Add(){
+			var username = document.getElementById("username").value;
+			var f = document.getElementById("first").value;
+			var l = document.getElementById("last").value;
+			var i = document.getElementById("income").value;
+			var fi = document.getElementById("fincome").value;
+			var bs = document.getElementById("bstudying").value;
+			var sc = document.getElementById("scity").value;
+			var c = document.getElementById("city").value;
+
+			var form = new XMLHttpRequest();
+			form.open("POST","http://localhost:8080/ds2019/api/forms/add?am="+username+"&first_name="+f+"&last_name="+l+"&income=0"+i+"&fincome="+fi+"&bstudying="+bs+"&scity="+sc+"&city="+c, true);
+			form.send();
+			window.location.assign("home.html");
+		}
+
+		function goBack() {
+  			window.location.assign("home.html");
+		}
+
+
+	</script>
+</head>
+<body onload = "fill()">
+	<form id="edit" name="edit">
+			<div id="username_div">Am: <input type="text" id="username" name="username" value="" >
+			</div>
+			<div id="first_div">First Name: <input type="text" id="first" name="first">
+			</div>
+			<div id="last_div">Last Name: <input type="text" id="last" name="last">
+			</div>
+			<div id="income_div">Income: <input type="text" id="income" name="income">
+			</div>
+			<div id="fincome_div">Family Income: <input type="text" id="fincome" name="fincome">
+			</div>
+			<div id="bstudying_div">Brothers Studying: <input type="text" id="bstudying" name="bstudying">
+			</div>
+			<div id="scity_div">Studying City: <input type="text" id="scity" name="scity">
+			</div>
+			<div id="city_div">City: <input type="text" id="city" name="city">
+			</div>
+			<input type="button" value="edit" onclick="Add()">
+	</form>
+			<button onclick="goBack()">Go Back</button>
+</body>
+</html>

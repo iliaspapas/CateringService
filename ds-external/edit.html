@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Edit your information</title>
+	<script type="text/javascript">
+		
+		function test(){
+			var username = localStorage.getItem("username");
+			var student = new XMLHttpRequest();
+			student.open("GET","http://localhost:8080/ds2019/api/student/"+username, true);
+			student.send();
+
+			student.onload = function(){
+				var data = JSON.parse(this.response);
+				var phone =  data['phone'];
+				var email = data['email'];
+				document.getElementById("phone").value = phone;
+				document.getElementById("email").value = email;
+			}
+
+		}
+
+		function Edit(){
+			var username = localStorage.getItem("username");
+			var student = new XMLHttpRequest();
+			var phone = document.getElementById("phone").value;
+			var email = document.getElementById("email").value;
+
+			student.open("PUT","http://localhost:8080/ds2019/api/student/edit/?username="+username+"&phone="+phone+"&email="+email, true);
+			student.send();
+			window.location.assign("home.html");
+		}
+
+		function goBack() {
+  			window.location.assign("home.html");
+
+		}
+
+
+	</script>
+</head>
+<body onload = "test()">
+	<form id="edit" name="edit">
+			<div id="phone_div">Phone: <input type="text" id="phone" name="phone" value="" >
+			</div>
+			<div id="email_div">Email: <input type="text" id="email" name="email" value="">
+			</div>
+			<input type="button" value="edit" onclick="Edit()">
+	</form>
+			<button onclick="goBack()">Go Back</button>
+</body>
+</html>
